@@ -27,7 +27,7 @@ public class ItemService  {
         return repository.findByState(State.aktivni);
     }
     public List<Item> getCompleted(){
-        return repository.findByState(State.completed);
+        return repository.findByState(State.ukoncene);
     }
     public Optional<Item> getItem(int id){
         return repository.findById(id);

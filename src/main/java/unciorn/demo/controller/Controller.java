@@ -26,8 +26,8 @@ public class Controller {
     @GetMapping("/shoppingList")
     public List<Item> getItems(@RequestParam(value="state",required = false)String param){
         if(param==null) return service.getItems().stream().sorted().toList();
-        if(param.equals("active")) return service.getActive().stream().sorted().toList();
-        else if(param.equals("completed")) return service.getCompleted().stream().sorted().toList();
+        if(param.equals("aktivni")) return service.getActive().stream().sorted().toList();
+        else if(param.equals("ukoncene")) return service.getCompleted().stream().sorted().toList();
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid param value: " + param);
     }
     @GetMapping("/shoppingItem/{id}")
@@ -41,7 +41,7 @@ public class Controller {
     @PostMapping("/shoppingItem")
     // @PutMapping("/shoppingItem/{id}")
     public ResponseEntity<String> createItem(@RequestBody ItemDTO item){
-        State state = item.getState().equals("active")? State.aktivni : State.completed;
+        State state = item.getState().equals("aktivni")? State.aktivni : State.ukoncene;
         Item item1 = new Item(item.getId(),item.getContent(), item.getCount(), state);
         service.createItem(item1);
         System.out.println("Check work " + item.getId());
@@ -54,7 +54,7 @@ public class Controller {
     }
     @PutMapping("shoppingItem/{id}")
     public ResponseEntity<String> updateItem(@RequestBody ItemDTO item,@PathVariable(value="id")int id){
-        State state = item.getState().equals("active")? State.aktivni : State.completed;
+        State state = item.getState().equals("aktivni")? State.aktivni : State.ukoncene;
         Item item1 = new Item(item.getId(),item.getContent(), item.getCount(), state);
         service.updateItem(item1,id);
         return ResponseEntity.ok("{}");
