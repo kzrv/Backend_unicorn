@@ -25,9 +25,9 @@ public class Controller {
 
     @GetMapping("/shoppingList")
     public List<Item> getItems(@RequestParam(value="state",required = false)String param){
-        if(param==null) return service.getItems();
-        if(param.equals("active")) return service.getActive();
-        else if(param.equals("completed")) return service.getCompleted();
+        if(param==null) return service.getItems().stream().sorted().toList();
+        if(param.equals("active")) return service.getActive().stream().sorted().toList();
+        else if(param.equals("completed")) return service.getCompleted().stream().sorted().toList();
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid param value: " + param);
     }
     @GetMapping("/shoppingItem/{id}")

@@ -7,7 +7,7 @@ import unciorn.demo.util.State;
 @Data
 @Entity
 @Table(name="Item")
-public class Item{
+public class Item implements Comparable<Item>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,5 +25,11 @@ public class Item{
         this.content = content;
         this.count = count;
         this.state = state;
+    }
+
+
+    @Override
+    public int compareTo(Item o) {
+        return content.compareTo(o.content);
     }
 }

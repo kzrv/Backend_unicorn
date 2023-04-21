@@ -1,5 +1,6 @@
 package unciorn.demo.service;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import unciorn.demo.model.Item;
@@ -37,10 +38,12 @@ public class ItemService  {
     public void deleteItem(int id){
         repository.deleteById(id);
     }
+    @Transactional
     public void updateItem(Item item, int id){
         Item item1 = repository.findById(id).get();
         item1.setCount(item.getCount());
         item1.setState(item.getState());
         repository.save(item1);
+       // repository.setItemInfoById(item.getCount(),item.getState(),id);
     }
 }
